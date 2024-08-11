@@ -1,0 +1,6 @@
+2024-08-11 19:24:35,377:INFO:Fetching data for AAPL
+2024-08-11 19:24:35,986:INFO:Data for AAPL saved to AAPL_data_20240811.csv
+2024-08-11 19:24:35,986:INFO:Fetching data for GOOGL
+2024-08-11 19:24:36,101:INFO:Data for GOOGL saved to GOOGL_data_20240811.csv
+2024-08-11 19:24:36,101:INFO:Fetching data for MSFT
+2024-08-11 19:24:36,312:INFO:Data for MSFT saved to MSFT_data_20240811.csv

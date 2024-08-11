@@ -1,0 +1,8 @@
+jax==0.4.13
+gym==0.26.2
+pandas==2.0.3
+numpy==1.24.3
+requests==2.31.0
+yfinance==0.2.28
+matplotlib==3.7.2
+fetchai-ledger-api==0.20.0
