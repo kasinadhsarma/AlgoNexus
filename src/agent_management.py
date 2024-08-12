@@ -80,5 +80,6 @@ def main():
     agent = TradingAgent(entity, ledger_api, contract)
     agent.run()
 
+
 if __name__ == "__main__":
     main()
