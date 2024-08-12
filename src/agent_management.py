@@ -14,7 +14,7 @@ class TradingAgent:
         self.entity = entity
         self.ledger_api = ledger_api
         self.contract = contract
-        self.environment = TradingEnvironment('/home/ubuntu/AAPL_data_20240811.csv')
+        self.environment = TradingEnvironment('data/AAPL_data_20240811.csv')
         self.short_window = 10
         self.long_window = 50
 
