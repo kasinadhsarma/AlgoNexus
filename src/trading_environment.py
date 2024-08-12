@@ -32,8 +32,8 @@ class TradingEnvironment(gym.Env):
         obs = np.array([
             self.balance,
             self.shares_held,
-            moving_average(self.prices[:self.current_step+1], self.short_window)[-1],
-            moving_average(self.prices[:self.current_step+1], self.long_window)[-1]
+            moving_average(self.prices[:self.current_step + 1], self.short_window)[-1],
+            moving_average(self.prices[:self.current_step + 1], self.long_window)[-1]
         ])
         return obs
 
