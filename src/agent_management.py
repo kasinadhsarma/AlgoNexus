@@ -4,8 +4,10 @@ from fetchai.ledger.api import LedgerApi
 from fetchai.ledger.api.token import TokenTxFactory
 
 import numpy as np
-from trading_environment import TradingEnvironment
-from moving_average_crossover_strategy import crossover_strategy
+import jax.numpy as jnp
+import tensorflow as tf
+from src.trading_environment import TradingEnvironment
+from moving_average_crossover_strategy import crossover_strategy_jax, crossover_strategy_tf
 
 class TradingAgent:
     def __init__(self, entity: Entity, ledger_api: LedgerApi, contract: Contract):
@@ -20,14 +22,21 @@ class TradingAgent:
         # Extract relevant information from the observation
         balance, shares_held, short_ma, long_ma = observation
 
-        # Use the crossover strategy to generate a signal
-        prices = np.array([short_ma, long_ma])  # Use the moving averages as a proxy for prices
-        signal = crossover_strategy(prices, self.short_window, self.long_window)[-1]
+        # Use both JAX and TensorFlow crossover strategies to generate signals
+        price = self.environment.prices[self.environment.current_step]
+        prices_jax = jnp.array([price])
+        prices_tf = tf.constant([price])
 
-        # Convert signal to action
-        if signal == 1 and balance > 0:
+        signal_jax = crossover_strategy_jax(prices_jax, self.short_window, self.long_window)[-1]
+        signal_tf = crossover_strategy_tf(prices_tf, self.short_window, self.long_window)[-1].numpy()
+
+        # Combine signals (e.g., take the average)
+        combined_signal = (signal_jax + signal_tf) / 2
+
+        # Convert combined signal to action
+        if combined_signal > 0.5 and balance > 0:
             return 1  # Buy
-        elif signal == -1 and shares_held > 0:
+        elif combined_signal < -0.5 and shares_held > 0:
             return 2  # Sell
         else:
             return 0  # Hold
@@ -79,6 +88,7 @@ def main():
     entity, ledger_api, contract = setup_fetch_ai()
     agent = TradingAgent(entity, ledger_api, contract)
     agent.run()
+
 
 if __name__ == "__main__":
     main()

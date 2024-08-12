@@ -2,7 +2,7 @@ import gym
 import numpy as np
 import pandas as pd
 from gym import spaces
-from moving_average_crossover_strategy import moving_average, load_data
+from moving_average_crossover_strategy import moving_average_jax, load_data
 
 class TradingEnvironment(gym.Env):
     def __init__(self, csv_file_path, initial_balance=10000, transaction_fee=0.001):
@@ -29,11 +29,14 @@ class TradingEnvironment(gym.Env):
         self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=(4,), dtype=np.float32)
 
     def _get_observation(self):
+        short_ma = moving_average_jax(self.prices[:self.current_step + 1], self.short_window)[-1]
+        long_ma = moving_average_jax(self.prices[:self.current_step + 1], self.long_window)[-1]
+
         obs = np.array([
             self.balance,
             self.shares_held,
-            moving_average(self.prices[:self.current_step+1], self.short_window)[-1],
-            moving_average(self.prices[:self.current_step+1], self.long_window)[-1]
+            short_ma if not np.isnan(short_ma) else self.prices[self.current_step],
+            long_ma if not np.isnan(long_ma) else self.prices[self.current_step]
         ])
         return obs
 

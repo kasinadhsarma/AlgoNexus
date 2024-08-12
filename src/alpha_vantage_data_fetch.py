@@ -22,16 +22,16 @@ def fetch_daily_stock_data(symbol):
         'symbol': symbol,
         'apikey': API_KEY
     }
-    
+
     try:
         response = requests.get(BASE_URL, params=params)
         response.raise_for_status()  # Raise an exception for bad status codes
         data = response.json()
-        
+
         if 'Error Message' in data:
             logging.error(f"Error fetching data for {symbol}: {data['Error Message']}")
             return None
-        
+
         return data
     except requests.RequestException as e:
         logging.error(f"Request failed for {symbol}: {str(e)}")
@@ -51,7 +51,7 @@ def save_data_to_file(data, symbol):
 
 def main():
     symbols = ['AAPL', 'GOOGL', 'MSFT']  # Example stock symbols
-    
+
     for symbol in symbols:
         logging.info(f"Fetching data for {symbol}")
         data = fetch_daily_stock_data(symbol)
@@ -59,6 +59,7 @@ def main():
             save_data_to_file(data, symbol)
         else:
             logging.warning(f"No data fetched for {symbol}")
+
 
 if __name__ == "__main__":
     if not API_KEY:
