@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 import numpy as np
 import gym
-from your_module import TradingEnvironment, moving_average_jax, load_data  # Replace 'your_module' with the actual module name
+from src.trading_environment import TradingEnvironment, moving_average_jax, load_data  # Replace 'your_module' with the actual module name
 
 class TestTradingEnvironment(unittest.TestCase):
 
