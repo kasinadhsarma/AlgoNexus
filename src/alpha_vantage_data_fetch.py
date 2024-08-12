@@ -60,6 +60,7 @@ def main():
         else:
             logging.warning(f"No data fetched for {symbol}")
 
+
 if __name__ == "__main__":
     if not API_KEY:
         logging.error("Alpha Vantage API key not found. Please set the ALPHA_VANTAGE_API_KEY environment variable.")

@@ -48,6 +48,6 @@ def main():
         else:
             logging.warning(f"No data fetched for {symbol}")
 
+
 if __name__ == "__main__":
     main()
-

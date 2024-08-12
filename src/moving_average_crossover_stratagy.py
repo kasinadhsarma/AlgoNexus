@@ -79,6 +79,6 @@ def main():
 
     print(f"Final cumulative return: {cumulative_returns[-1]:.2f}")
 
+
 if __name__ == "__main__":
     main()
-
