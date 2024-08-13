@@ -16,8 +16,9 @@ class TestTradingEnvironment(unittest.TestCase):
         # Initialize the environment
         self.env = TradingEnvironment(csv_file_path='dummy_path.csv')
 
-    @patch('your_module.load_data', self.mock_load_data)
-    def test_initialization(self):
+    @patch('your_module.load_data')
+    def test_initialization(self, mock_load_data):
+        mock_load_data.return_value = self.mock_prices
         self.assertEqual(self.env.initial_balance, 10000)
         self.assertEqual(self.env.transaction_fee, 0.001)
         self.assertEqual(self.env.action_space.n, 3)
@@ -71,8 +72,9 @@ class TestTradingEnvironment(unittest.TestCase):
         self.env.reset()
         self.env.render()
         mock_print.assert_called_with(
-            f'Step: 0\nBalance: 10000\nShares held: 0\nCurrent price: 100\nTotal value: 10000'
+            f'Step: {0}\nBalance: {10000}\nShares held: {0}\nCurrent price: {100}\nTotal value: {10000}'
         )
 
 if __name__ == "__main__":
     unittest.main()
+
