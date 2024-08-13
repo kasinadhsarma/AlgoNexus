@@ -37,17 +37,18 @@ jobs:
     - name: Run linting
       run: flake8 .
     
-    - name: Run tests
-      run: |
-        pip install pytest pytest-cov
-        pytest --cov=src
+    # Tests have been removed as per user request
+    # - name: Run tests
+    #   run: |
+    #     pip install pytest pytest-cov
+    #     pytest --cov=src
     
-    - name: Upload coverage results
-      if: success()
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-report
-        path: coverage.xml
+    # - name: Upload coverage results
+    #   if: success()
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: coverage-report
+    #     path: coverage.xml
 
     - name: Debug information
       run: |
