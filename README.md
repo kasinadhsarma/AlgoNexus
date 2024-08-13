@@ -1,5 +1,5 @@
 # AlgoNexus
-
+[![AlgoNNexus](https://github.com/kasinadhsarma/AlgoNexus/actions/workflows/ci.yml/badge.svg)](https://github.com/kasinadhsarma/AlgoNexus/actions/workflows/ci.yml)
 ## Description
 AlgoNexus is an Automated Financial Trading System designed for algorithmic trading. It leverages advanced strategies and machine learning techniques to analyze market data, make trading decisions, and execute trades automatically.
 
