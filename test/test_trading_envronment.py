@@ -1,8 +1,11 @@
+import sys
+sys.path.append('/home/ubuntu/AlgoNexus/src')
 import unittest
 from unittest.mock import patch, MagicMock
 import numpy as np
 import gym
-from src.trading_environment import TradingEnvironment, moving_average_jax, load_data  # Replace 'your_module' with the actual module name
+from trading_environment import TradingEnvironment
+from moving_average_crossover_strategy import moving_average_jax, load_data
 
 class TestTradingEnvironment(unittest.TestCase):
 
@@ -16,7 +19,7 @@ class TestTradingEnvironment(unittest.TestCase):
         # Initialize the environment
         self.env = TradingEnvironment(csv_file_path='dummy_path.csv')
 
-    @patch('your_module.load_data')
+    @patch('moving_average_crossover_strategy.load_data')
     def test_initialization(self, mock_load_data):
         mock_load_data.return_value = self.mock_prices
         self.assertEqual(self.env.initial_balance, 10000)
@@ -25,7 +28,7 @@ class TestTradingEnvironment(unittest.TestCase):
         self.assertEqual(self.env.observation_space.shape, (4,))
         self.assertTrue(np.all(self.env.prices == self.mock_prices))
 
-    @patch('your_module.moving_average_jax')
+    @patch('moving_average_crossover_strategy.moving_average_jax')
     def test_step_buy(self, mock_moving_average):
         mock_moving_average.return_value = np.array([100, 105, 110, 115, 120, 125, 130])
         
@@ -36,7 +39,7 @@ class TestTradingEnvironment(unittest.TestCase):
         self.assertEqual(self.env.shares_held, 10000 // 100)
         self.assertEqual(self.env.current_step, 1)
 
-    @patch('your_module.moving_average_jax')
+    @patch('moving_average_crossover_strategy.moving_average_jax')
     def test_step_sell(self, mock_moving_average):
         mock_moving_average.return_value = np.array([100, 105, 110, 115, 120, 125, 130])
         

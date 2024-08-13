@@ -1,9 +1,11 @@
+import sys
+sys.path.append('/home/ubuntu/AlgoNexus/src')
 import unittest
 from unittest.mock import patch, MagicMock
 import jax.numpy as jnp
 import pandas as pd
 import matplotlib.pyplot as plt
-from src.moving_average_crossover_stratagy import moving_average, crossover_strategy, backtest_strategy, load_data, plot_results, main  # Replace 'your_module' with the actual module name
+from moving_average_crossover_strategy import moving_average, crossover_strategy, backtest_strategy, load_data, plot_results, main
 
 class TestTradingStrategies(unittest.TestCase):
     
@@ -49,8 +51,8 @@ class TestTradingStrategies(unittest.TestCase):
         mock_savefig.assert_called()
         self.assertEqual(mock_savefig.call_count, 2)
 
-    @patch('your_module.load_data', return_value=jnp.array([100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150], dtype=jnp.float32))
-    @patch('your_module.plot_results')
+    @patch('moving_average_crossover_strategy.load_data', return_value=jnp.array([100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150], dtype=jnp.float32))
+    @patch('moving_average_crossover_strategy.plot_results')
     def test_main(self, mock_plot_results, mock_load_data):
         with patch('builtins.print') as mock_print:
             main()
