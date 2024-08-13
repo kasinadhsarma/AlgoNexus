@@ -2,7 +2,7 @@ import gym
 import numpy as np
 import pandas as pd
 from gym import spaces
-from moving_average_crossover_strategy import moving_average_jax, load_data
+from moving_average_crossover_strategy import moving_average as moving_average_jax, load_data
 
 class TradingEnvironment(gym.Env):
     def __init__(self, csv_file_path, initial_balance=10000, transaction_fee=0.001):
