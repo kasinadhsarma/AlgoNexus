@@ -7,7 +7,7 @@ import numpy as np
 import jax.numpy as jnp
 import tensorflow as tf
 from src.trading_environment import TradingEnvironment
-from moving_average_crossover_strategy import crossover_strategy_jax, crossover_strategy_tf
+from moving_average_crossover_strategy import moving_average
 
 class TradingAgent:
     def __init__(self, entity: Entity, ledger_api: LedgerApi, contract: Contract):
@@ -22,16 +22,16 @@ class TradingAgent:
         # Extract relevant information from the observation
         balance, shares_held, short_ma, long_ma = observation
 
-        # Use both JAX and TensorFlow crossover strategies to generate signals
+        # Use JAX-based moving average crossover strategy to generate signal
         price = self.environment.prices[self.environment.current_step]
         prices_jax = jnp.array([price])
-        prices_tf = tf.constant([price])
 
-        signal_jax = crossover_strategy_jax(prices_jax, self.short_window, self.long_window)[-1]
-        signal_tf = crossover_strategy_tf(prices_tf, self.short_window, self.long_window)[-1].numpy()
+        short_ma = moving_average(prices_jax, self.short_window)[-1]
+        long_ma = moving_average(prices_jax, self.long_window)[-1]
+        signal = jnp.where(short_ma > long_ma, 1, -1)
 
-        # Combine signals (e.g., take the average)
-        combined_signal = (signal_jax + signal_tf) / 2
+        # Use the signal directly for decision making
+        combined_signal = signal
 
         # Convert combined signal to action
         if combined_signal > 0.5 and balance > 0:
